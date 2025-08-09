@@ -1,5 +1,9 @@
 <style>
 
+/*******************/
+/***** STYLING *****/
+/*******************/
+
 :root {
   --blackLightTransparant: rgba(0, 0, 0, 0.07); // box shadow, input shadow, #overlay
   --blackMediumTransparant: rgba(0, 0, 0, 0.2); // Box shadows, input, table, overlay, pressed button shadow, button hover shadow
@@ -29,11 +33,11 @@
   --whiteTransparant: rgba(255, 255, 255, 0.4); // btn-expand hover, spinner-bg
 }
 
-.example-hu {
+.green-on-white {
   color: var(--greenDark);
 }
 
-.example-nl {
+.gray-italic-on-white {
   color: var(--grayMedium);
   font-style: italic;
 }
@@ -51,11 +55,16 @@
   color: var(--grayMedium)
 }
 
-window, html, body {
-  overscroll-behavior: none;
+b {
+  font-weight: 600; /* of 400, of 600 */
 }
 
-/* Reset and base */
+/****************************/
+/***** SHARED ELEMENTS *****/
+/****************************/
+
+/***** BASICS *****/
+
 * {
   overscroll-behavior: none; // no refreshing
   box-sizing: border-box;
@@ -64,7 +73,6 @@ window, html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 
 html, body {
@@ -74,16 +82,7 @@ html, body {
   font-size: 15px;
 }
 
-b {
-  font-weight: 600; /* of 400, of 600 */
-}
-
-
-
-/*****************/
 /***** TABLE *****/
-/*****************/
-
 
 /* Table fills viewport height */
 table {
@@ -96,8 +95,143 @@ table {
  // box-shadow: 0 4px 12px var(--blackLightTransparant);
 }
 
-/* Table headers */
-thead {
+th, td {
+  border: 2px solid var(--grayLight);
+  padding: 10px 14px;
+  vertical-align: top;
+  word-wrap: break-word;
+  transition: background-color 0.2s ease;
+  text-align: left; 
+}
+
+/***** LIST *****/
+
+ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+li {
+  list-style: none;
+  position: relative;
+  padding-left: 1em; /* space for bullet */
+}
+
+li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  color: var(--grayMedium);
+//  font-size: 1em;
+  line-height: 1.2;
+}
+
+/***** SUMMARY, DETAIL, .EXPLANATION-BOX *****/
+
+summary {
+  padding: 10px 14px;
+  border-left: 2px solid var(--grayLight);
+  border-right: 2px solid var(--grayLight);
+  display: flex;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+}
+
+/* De pseudo-pijl komt binnen de 14px linker padding */
+summary::before {
+  content: '▶';
+  margin-right: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+/* Draai de pijl als details open is */
+.det-lvl1[open] > .summ-lvl1::before {
+  transform: rotate(90deg);
+}
+
+.summ-lvl1 {
+  background-color: var(--blueMicrosoft);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.det-lvl2[open] > .summ-lvl2::before {
+  transform: rotate(90deg);
+}
+
+.summ-lvl2 {
+  background: var(--bluePale);
+  color: var(--blueMicrosoft);
+  font-weight: 600;
+}
+
+.det-lvl3[open] > .summ-lvl3::before {
+  transform: rotate(90deg);
+}
+
+.det-lvl3[open] > .summ-lvl3 {
+  display: none;
+}
+
+.det-lvl3[open] > .summ-lvl3 {
+  display: none;
+}
+
+.det-lvl3 > .explanation-box:first-of-type {
+  border-top: none;
+}
+
+.det-lvl3 > .explanation-box:last-of-type {
+  border-bottom: 2px solid var(--grayLight);
+}
+
+.summ-lvl3 {
+  background-color: var(--white);
+  color: var(--grayMedium);
+  border-bottom: 2px solid var(--grayLight);
+}
+
+// border: top, right and left
+// padding: all 4
+
+.explanation-box {
+  padding: 10px 14px;
+  background-color: var(--white);
+  border-right: 2px solid var(--grayLight);
+  border-left: 2px solid var(--grayLight);
+  border-top: 2px solid var(--grayLight);
+  border-bottom: none;
+}
+
+.explanation-box > :first-child {
+  margin-top: 0;
+}
+
+.explanation-title {
+  color: var(--blueMicrosoft);
+  font-weight: 600;
+}
+
+.explanation-box p {
+  margin-top: 10px;
+}
+
+.left-indent {
+  padding-left: 15px;
+} 
+
+/**********************/
+/***** VOCABULARY *****/
+/**********************/
+
+#vocabulary th, #vocabulary td {
+  width: 50%;
+}
+
+#vocabulary thead {
   background-color: var(--blueMicrosoft);
   color: var(--white);
   font-weight: 600;
@@ -107,21 +241,7 @@ thead {
   transition: transform 0.3s ease;
 }
 
-
-
-th, td {
-  width: 50%;
-  border: 2px solid var(--grayLight);
-  padding: 10px 14px;
-  vertical-align: top;
-  word-wrap: break-word;
-  transition: background-color 0.2s ease;
-  text-align: left; 
-}
-
-
-
-th .sort-arrow {
+#vocabulary  th .sort-arrow {
   margin-left: 6px;
   user-select: none;
   display: inline-block;  /* belangrijk, anders kan het "content" wegvallen */
@@ -130,22 +250,74 @@ th .sort-arrow {
   color: var(--white);
 }
 
-th.asc .sort-arrow::after {
+#vocabulary  th.asc .sort-arrow::after {
   content: "▼";
 }
 
-th.desc .sort-arrow::after {
+#vocabulary  th.desc .sort-arrow::after {
   content: "▲";
 }
 
-/* Highlight row on hover */
-#vocabulary tbody tr:hover {
-  background-color: var(--bluePale);
+/******************/
+/***** CASES ******/
+/******************/
+
+// "suffix"
+
+#cases td.explanation-title {
+  padding-bottom: 0;
+  border-bottom: none
 }
 
-/******************/
-/***** BUTTON *****/
-/******************/
+//suffixes
+
+#cases td.explanation-data {
+  border-top: none
+}
+
+/*****************/
+/***** VERBS *****/
+/*****************/
+
+#verbs td.explanation-title {
+  border-top: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: none
+}
+
+
+
+#verbs td.explanation-data {
+  border-top: none;
+  border-bottom: none;
+}
+
+#verbs span.verb-pers {
+  display: inline-block;
+  width: 35px;
+  color: var(--grayMedium)
+}
+
+/*********************/
+/***** SENTENCES *****/
+/*********************/
+
+#sentences .explanation-box:last-of-type {
+  border-bottom: 2px solid var(--grayLight);
+}
+
+#sentences .explanation-box > div:first-of-type {
+  padding-bottom: 3px;
+}
+
+#sentences .explanation-box > div:last-of-type {
+  padding-top: 3px;
+}
+
+/***********************/
+/***** ALL BUTTONS *****/
+/***********************/
 
 button svg {
   width: 20px;
@@ -417,180 +589,6 @@ button svg * {
   ) 1;
 }
 
-/****************/
-/***** LIST *****/
-/****************/
-
-ul {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-li {
-  list-style: none;
-  position: relative;
-  padding-left: 1em; /* space for bullet */
-}
-
-li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  top: 0.1em;
-  color: var(--grayMedium);
-//  font-size: 1em;
-  line-height: 1.2;
-}
-
-
-
-/*******************/
-/***** DETAILS AND SUMMARY *****/
-/*******************/
-
-summary {
-  padding: 10px 14px;
-  border-left: 2px solid var(--grayLight);
-  border-right: 2px solid var(--grayLight);
-  display: flex;
-  align-items: center;
-  list-style: none;
-  cursor: pointer;
-  position: relative;
-}
-
-/* De pseudo-pijl komt binnen de 14px linker padding */
-summary::before {
-  content: '▶';
-  margin-right: 0.5rem;
-  transition: transform 0.2s ease;
-}
-
-
-/* Draai de pijl als details open is */
-.det-lvl1[open] > .summ-lvl1::before {
-  transform: rotate(90deg);
-}
-
-
-
-.summ-lvl1 {
-  background-color: var(--blueMicrosoft);
-  color: var(--white);
-  font-weight: 600;
-}
-
-
-.det-lvl2[open] > .summ-lvl2::before {
-  transform: rotate(90deg);
-}
-
-.summ-lvl2 {
-  background: var(--bluePale);
-  color: var(--blueMicrosoft);
-  font-weight: 600;
-}
-
-.det-lvl3[open] > .summ-lvl3::before {
-  transform: rotate(90deg);
-}
-
-.det-lvl3[open] > .summ-lvl3 {
-  display: none;
-}
-
-
-.det-lvl3[open] > .summ-lvl3 {
-  display: none;
-}
-
-
-.summ-lvl3 {
-  background-color: var(--white);
-  color: var(--grayMedium);
-  border-bottom: 2px solid var(--grayLight);
-}
-
-.explanation-box {
-  padding: 10px 14px;
-  background-color: var(--white);
-  border-right: 2px solid var(--grayLight);
-  border-left: 2px solid var(--grayLight);
-  border-top: 2px solid var(--grayLight);
-  border-bottom: none;
-}
-
-.explanation-box .explanation-title, td.explanation-title {
-  color: var(--blueMicrosoft);
-  font-weight: 600;
-}
-
-td.explanation-title {
- 
-  padding-bottom: 0;
-  border-bottom: none
-
-}
-
-td.explanation-data {
-   border-top: none
-
-}
-
-.explanation-box p {
-  margin-top: 10px;
-}
-
-// this is the explanation)title
-.explanation-box p:first-child {
-  margin-top: 0
-}
-
-.explanation-box p.left-indent {
-  padding-left: 15px;
-} 
-
-
-span.verb-pers {
-  display: inline-block;
-  width: 35px;
-  color: var(--grayMedium)
-}
-
-/*******************/
-/***** GRAMMAR *****/
-/*******************/
-
-#grammar .det-lvl3 > .explanation-box:first-of-type {
-  border-top: none;
-}
-
-#grammar .det-lvl3 > .explanation-box:last-of-type {
-  border-bottom: 2px solid var(--grayLight);
-}
-
-
-/***** VERBS *****/
-
-#verbs td {
-  border-top: none
-}
-
-/*********************/
-/***** SENTENCES *****/
-/*********************/
-
-#sentences .explanation-box:last-of-type {
-  border-bottom: 2px solid var(--grayLight);
-}
-
-#sentences .explanation-box > div:first-of-type {
-  padding-bottom: 3px;
-}
-
-#sentences .explanation-box > div:last-of-type {
-  padding-top: 3px;
-}
 
 /*******************/
 /***** SPINNER *****/

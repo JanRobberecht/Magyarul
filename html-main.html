@@ -97,7 +97,17 @@
     <div id="overlay" style="display:none"></div>
 
     <?!= include("html-vocabulary");?> 
-    <?!= include("html-grammar");?>
+
+    <div id="grammar" style="display:none">
+      <?!= include("html-g-general");?>
+      <?!= include("html-g-posession");?>
+      <?!= include("html-g-vowelharmony");?>
+      <?!= include("html-g-cases");?>
+      <?!= include("html-g-verbs");?>
+      <?!= include("html-g-wordorder");?>
+
+    </div>
+
     <?!= include("html-sentences");?> 
 
     <!--table>
