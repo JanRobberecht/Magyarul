@@ -37,9 +37,18 @@
   color: var(--greenDark);
 }
 
+.green-on-white-bold {
+  color: var(--greenDark);
+  font-weight: 600;
+}
+
 .gray-italic-on-white {
   color: var(--grayMedium);
   font-style: italic;
+}
+
+.gray-on-white {
+  color: var(--grayMedium);
 }
 
 .red-on-white {
@@ -211,7 +220,7 @@ summary::before {
 }
 
 .explanation-title {
-  color: var(--blueMicrosoft);
+  
   font-weight: 600;
 }
 
@@ -265,6 +274,7 @@ summary::before {
 // "suffix"
 
 #cases td.explanation-title {
+  color: var(--blueMicrosoft);
   padding-bottom: 0;
   border-bottom: none
 }
@@ -280,6 +290,15 @@ summary::before {
 /*****************/
 
 #verbs td.explanation-title {
+  
+  border-top: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: none
+}
+
+#verbs div.explanation-title {
+  color: var(--blueMicrosoft);
   border-top: none;
   padding-top: 0;
   padding-bottom: 0;
@@ -293,11 +312,25 @@ summary::before {
   border-bottom: none;
 }
 
-#verbs span.verb-pers {
-  display: inline-block;
+#verbs div.verb-pers {
+  display: flex;
+ 
+}
+
+#verbs .verb-pers > div:first-child {
   width: 35px;
+}
+
+#verbs .basis.form .verb-pers > div:first-child {
   color: var(--grayMedium)
 }
+
+
+#verbs .not-basic-form .verb-pers > div {
+  color: var(--grayMedium)
+}
+
+
 
 /*********************/
 /***** SENTENCES *****/
