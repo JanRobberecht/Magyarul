@@ -21,6 +21,20 @@ html, body {
   overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+
+
+/* ===========================
+  Structure within body
+=========================== 
+
+- app-container
+  | - header
+  | - content
+      | - sidebar
+      | - main conent
+
+ */
+
 /* App container */
 .app-container {
   display: flex;
@@ -32,12 +46,9 @@ html, body {
 /* in here is the sidebar and the main-conent */
 .content-container {
   display: flex;
-  padding-top: var(--header-height);
+  padding-top: var(--header-height); /* because header is fixed */
 }
 
-/* ===========================
-   Main content
-=========================== */
 .main-content {
   flex: 1;
   padding: 20px;
@@ -45,7 +56,7 @@ html, body {
 }
 @media (min-width: 768px) {
   .main-content {
-    margin-left: 200px;
+    margin-left: 200px; /* because sidebar is fixed and main-content slides underneath */
   }
 }
 
@@ -74,12 +85,13 @@ html, body {
 
 .header h1 {
   display: none;
+   font-family: "Merienda", cursive;
+  font-size: 2rem;
 }
 @media (min-width: 768px) {
   .header h1 {
     display: block;
-     font-family: "Merienda", cursive;
-  font-size: 2rem;
+  
   }
 }
 
@@ -132,6 +144,33 @@ html, body {
 /* ===========================
    Sidebar
 =========================== */
+
+.sidebar ul {
+   list-style: none;
+
+}
+
+.sidebar ul li {
+  padding-top: 20px;
+   list-style: none;
+
+}
+
+.sidebar ul li ul {
+  padding-left: 15px;
+}
+
+.sidebar ul a.active-link {
+  text-decoration: none;
+  color: pink
+}
+
+.sidebar ul a {
+  text-decoration: none;
+  color: black
+}
+
+
 /* Mobile sidebar */
 .sidebar.mobile {
   display: none;
@@ -160,9 +199,9 @@ html, body {
   -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
 }
 
-.sidebar.mobile ul {
-  list-style: none;
-}
+
+
+
 
 .sidebar.mobile ul li ul {
   padding-left: 15px;
@@ -186,9 +225,8 @@ html, body {
     }
 }
 
-.sidebar.desktop ul {
-  list-style: none;
-}
+
+
 
 
 

@@ -16,7 +16,7 @@ const pronounCategories = [
 function Cases() {
   return (
     <div>
-		<h1>This is the grammar page Yo</h1>
+		<h1>This is the grammar page</h1>
 		{Object.entries(cases).map(([caseName, caseData]) => (
 			<div key={caseName} id={caseName} className={"case-container"}>
 				<div className={"case-header"}>
