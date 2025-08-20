@@ -19,6 +19,8 @@ import Home from "./pages/Home";
    Sidebar component
 =========================== */
 function Sidebar({ open, setOpen }) {
+  const location = useLocation();
+
   const menu = [
     {
       label: "Grammar",
@@ -38,15 +40,16 @@ function Sidebar({ open, setOpen }) {
     },
   ];
 
-  const [expanded, setExpanded] = useState({}); // track welke menu’s open zijn
+  const links = [];
+  if (location.pathname.startsWith("/grammar")) {
+    links.push({ label: "Cases", path: "/grammar/cases" });
+    links.push({ label: "Verbs", path: "/grammar/verbs" });
+  } else if (location.pathname.startsWith("/vocabulary")) {
+    links.push({ label: "Words", path: "/vocabulary/words" });
+    links.push({ label: "Expressions", path: "/vocabulary/expressions" });
+  }
 
-  const toggle = (label) => {
-    setExpanded((prev) => ({ ...prev, [label]: !prev[label] }));
-  };
-
-  const isMobile = window.innerWidth < 768;
-
-  // Close mobile sidebar on resize
+  // Close mobile sidebar on window resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768 && open) setOpen(false);
@@ -55,39 +58,50 @@ function Sidebar({ open, setOpen }) {
     return () => window.removeEventListener("resize", handleResize);
   }, [open, setOpen]);
 
+  const isMobile = window.innerWidth < 768;
+
   return (
     <nav className={`sidebar ${open ? "open" : ""}`}>
-      <ul className="menu">
-        {menu.map((item) => (
-          <li key={item.path}>
-            <div
-              className="menu-label"
-              onClick={() => item.children && toggle(item.label)}
-            >
-              {item.children && (
-                <span className={`arrow ${expanded[item.label] ? "down" : "right"}`}>
-                  ▶
-                </span>
-              )}
-              {item.label}
-            </div>
-            {item.children && expanded[item.label] && (
-              <ul className="submenu">
-                {item.children.map((child) => (
-                  <li key={child.path}>
-                    <NavLink
-                      to={child.path}
-                      onClick={() => isMobile && setOpen(false)}
-                      className={({ isActive }) => (isActive ? "active-link" : "")}
-                    >
-                      {child.label}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
+      <ul>
+        {isMobile
+          ? menu.map((item) => (
+              <li key={item.path}>
+                <NavLink
+                  to={item.path}
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) => (isActive ? "active-link" : "")}
+                >
+                  {item.label}
+                </NavLink>
+                {item.children && (
+                  <ul>
+                    {item.children.map((child) => (
+                      <li key={child.path}>
+                        <NavLink
+                          to={child.path}
+                          onClick={() => setOpen(false)}
+                          className={({ isActive }) =>
+                            isActive ? "active-link" : ""
+                          }
+                        >
+                          {child.label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          : links.map((link) => (
+              <li key={link.path}>
+                <NavLink
+                  to={link.path}
+                  className={({ isActive }) => (isActive ? "active-link" : "")}
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
       </ul>
     </nav>
   );
@@ -103,10 +117,17 @@ function Header({ onHamburgerClick }) {
         ☰
       </button>
       <h1>Magyarul</h1>
+      <nav className="top-nav">
+        <NavLink to="/grammar" className={({ isActive }) => (isActive ? "active-link" : "")}>
+          Grammar
+        </NavLink>
+        <NavLink to="/vocabulary" className={({ isActive }) => (isActive ? "active-link" : "")}>
+          Vocabulary
+        </NavLink>
+      </nav>
     </header>
   );
 }
-
 
 /* ===========================
    Main App component

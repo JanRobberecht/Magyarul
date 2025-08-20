@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uitleg React useState prev met diagram</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .diagram text {
+      font-size: 14px;
+      text-anchor: middle;
+    }
+    .diagram rect {
+      fill: #cce5ff;
+      stroke: #004085;
+      stroke-width: 1.5;
+    }
+    .arrow {
+      stroke: #333;
+      stroke-width: 1.5;
+      marker-end: url(#arrowhead);
+    }
+  </style>
+</head>
+<body>
+  <h1>Uitleg van <code>prev</code> in React's <code>useState</code></h1>
+
+  <h2>Codevoorbeeld</h2>
+  <pre>
+const toggle = (label) =&gt; {
+  setExpanded((prev) =&gt; ({ ...prev, [label]: !prev[label] }));
+};
+  </pre>
+
+  <h2>Wat is <code>prev</code>?</h2>
+  <ol>
+    <li><code>setExpanded</code> is de setterfunctie van je <code>useState</code> hook:
+      <pre>const [expanded, setExpanded] = useState({});</pre>
+    </li>
+    <li><code>useState</code> geeft twee dingen:
+      <ul>
+        <li>de huidige state (<code>expanded</code>)</li>
+        <li>een functie om de state bij te werken (<code>setExpanded</code>)</li>
+      </ul>
+    </li>
+    <li><code>setExpanded</code> kan twee soorten argumenten krijgen:
+      <ul>
+        <li>Direct een nieuwe state: <code>setExpanded({ Grammar: true })</code></li>
+        <li>Een functie die de vorige state ontvangt: <code>setExpanded(prev =&gt; ({ ...prev, Grammar: !prev.Grammar }))</code></li>
+      </ul>
+    </li>
+    <li>In dit geval is <code>prev</code> de vorige waarde van <code>expanded</code>. We maken een nieuw object door alles uit <code>prev</code> te kopiëren en vervolgens de waarde van het specifieke label om te draaien.</li>
+  </ol>
+
+  <h2>Waarom deze aanpak?</h2>
+  <ul>
+    <li>State updates zijn asynchroon in React, dus de huidige waarde van <code>expanded</code> is niet altijd up-to-date.</li>
+    <li>Door <code>prev</code> te gebruiken, werk je altijd met de laatst bekende state, zodat je eerdere wijzigingen niet overschrijft.</li>
+    <li>Dit voorkomt race conditions wanneer meerdere menu-items geopend of gesloten worden.</li>
+  </ul>
+
+  <h2>Analogie</h2>
+  <p>Stel dat <code>expanded</code> een plank is met vakjes:</p>
+  <pre>
+expanded = { Grammar: true, Vocabulary: false }
+  </pre>
+  <p>Als je <code>toggle("Vocabulary")</code> doet, wil je dit resultaat:</p>
+  <pre>
+{ Grammar: true, Vocabulary: !false }  // =&gt; { Grammar: true, Vocabulary: true }
+  </pre>
+  <p>Door <code>prev</code> te gebruiken, behoud je de bestaande waarde van andere menu’s en draai je alleen het geselecteerde menu om.</p>
+
+  <h2>Diagram van <code>expanded</code> veranderingen</h2>
+  <svg width="600" height="250" class="diagram">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+      </marker>
+    </defs>
+
+    <!-- Step 1 -->
+    <rect x="50" y="30" width="200" height="40" rx="5" ry="5"></rect>
+    <text x="150" y="55">Step 1: { Grammar: false, Vocabulary: false }</text>
+
+    <!-- Arrow -->
+    <line x1="150" y1="70" x2="150" y2="110" class="arrow"></line>
+
+    <!-- Step 2 -->
+    <rect x="50" y="110" width="200" height="40" rx="5" ry="5"></rect>
+    <text x="150" y="135">Step 2: toggle("Grammar") =&gt; { Grammar: true, Vocabulary: false }</text>
+
+    <!-- Arrow -->
+    <line x1="150" y1="150" x2="150" y2="190" class="arrow"></line>
+
+    <!-- Step 3 -->
+    <rect x="50" y="190" width="250" height="40" rx="5" ry="5"></rect>
+    <text x="175" y="215">Step 3: toggle("Vocabulary") =&gt; { Grammar: true, Vocabulary: true }</text>
+  </svg>
+
+  <h2>Conclusie</h2>
+  <p><strong>prev</strong> komt van React zelf; het is de vorige waarde van de state die beheerd wordt met <code>useState</code>. Door deze aanpak blijven alle andere waarden intact en wordt alleen het gewenste menu-item omgedraaid.</p>
+</body>
+</html>

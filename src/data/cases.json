@@ -4,7 +4,7 @@
     "meaning": "subject",
     "suffix": [""],
     "person_prn": ["én", "te", "ő / Ön", "mi", "ti", "ők / Önök"],
-    "demons_prn": ["ez / ezek", "az / azok", "emen / emebek", "amott / amazok", "azon / azonok"],
+    "demons_prn": ["ez", "az", "ezek", "azok"],
     "interr_prn": ["ki", "mi", "melyik", "milyen", "mennyi", "hol", "honnan", "hová", "mikor", "miért", "hogyan"],
     "reflex_prn": ["magam", "magad", "maga", "magunk", "magatok", "maguk"]
   },
@@ -13,7 +13,7 @@
     "meaning": "direct object",
     "suffix": ["-t"],
     "person_prn": ["engem", "téged", "őt / Önt", "minket", "titeket", "őket / Önöket"],
-    "demons_prn": ["ezt / ezeket", "azt / azokat", "ement / emebeket", "amottat / amazokat", "azont / azonokat"],
+    "demons_prn": ["ezt", "azt", "ezeket", "azokat"],
     "interr_prn": ["kit", "mit", "melyiket", "milyent", "mennyi(t)", "hol(t)?", "honnant", "hovát", "mikor(t)?", "miért(t)?", "hogyan(t)?"],
     "reflex_prn": ["magamat", "magadat", "magát", "magunkat", "magatokat", "magukat"]
   },
@@ -22,7 +22,7 @@
     "meaning": "indirect object",
     "suffix": ["-nak", "-nek"],
     "person_prn": ["nekem", "neked", "neki / Önnek", "nekünk", "nektek", "nekik / Önöknek"],
-    "demons_prn": ["ennek / ezeknek", "annak / azoknak", "emennek / emebeknek", "amottaknak / amazoknak", "azonak / azonoknak"],
+    "demons_prn": ["ennek", "annak", "ezeknek", "azoknak"],
     "interr_prn": ["kinek", "minek", "melyiknek", "milyennek", "mennyi(nak)?", "holnak?", "honnannak?", "hovának?", "mikor(nak)?", "miért(nak)?", "hogyan(nak)?"],
     "reflex_prn": ["magamnak", "magadnak", "magának", "magunknak", "magatoknak", "maguknak"]
   },
@@ -31,7 +31,7 @@
     "meaning": "into (hollow space)",
     "suffix": ["-ba", "-be"],
     "person_prn": ["belém", "beléd", "belé / Önbe", "belénk", "belétek", "beléjük / Önökbe"],
-    "demons_prn": ["ebbe / ezekbe", "abba / azokba", "emembe / emebekbe", "amottba / amazokba", "azonba / azonokba"],
+    "demons_prn": ["ebbe", "abba", "ezekbe", "azokba"],
     "interr_prn": ["kibe", "mibe", "melyikbe", "milyenbe", "mennyi(be)?", "holba?", "honnanba?", "hovába?", "mikorba?", "miértbe?", "hogyanba?"],
     "reflex_prn": ["magamba", "magadba", "magába", "magunkba", "magatokba", "magukba"]
   },
@@ -40,7 +40,7 @@
     "meaning": "in (hollow space)",
     "suffix": ["-ban", "-ben"],
     "person_prn": ["bennem", "benned", "benne / Önben", "bennünk", "bennetek", "bennük / Önökben"],
-    "demons_prn": ["ebben / ezekben", "abban / azokban", "ememben / emebekben", "amottban / amazokban", "azonban / azonokban"],
+    "demons_prn": ["ebben", "abban", "ezekben", "azokban"],
     "interr_prn": ["kiben", "miben", "melyikben", "milyenben", "mennyi(ben)?", "holban?", "honnanban?", "hovában?", "mikorban?", "miértben?", "hogyanban?"],
     "reflex_prn": ["magamban", "magadban", "magában", "magunkban", "magatokban", "magukban"]
   },
@@ -49,7 +49,7 @@
     "meaning": "out of (hollow space)",
     "suffix": ["-ból", "-ből"],
     "person_prn": ["belőlem", "belőled", "belőle / Önből", "belőlünk", "belőletek", "belőlük / Önökből"],
-    "demons_prn": ["ebből / ezekből", "abból / azokból", "eméből / emebekből", "amottból / amazokból", "azonból / azonokból"],
+    "demons_prn": ["ebből", "abból", "ezekből", "azokból"],
     "interr_prn": ["kiből", "miből", "melyikből", "milyenből", "mennyi(ből)?", "holból?", "honnanból?", "hovából?", "mikorból?", "miértből?", "hogyanból?"],
     "reflex_prn": ["magamból", "magadból", "magából", "magunkból", "magatokból", "magukból"]
   },
@@ -58,7 +58,7 @@
     "meaning": "to (solid object)",
     "suffix": ["-hoz", "-hez", "-höz"],
     "person_prn": ["hozzám", "hozzád", "hozzá / Önhöz", "hozzánk", "hozzátok", "hozzájuk / Önökhöz"],
-    "demons_prn": ["ehhez / ezekhez", "ahhoz / azokhoz", "eméhhez / emebekhez", "amotthoz / amazokhoz", "azonhoz / azonokhoz"],
+    "demons_prn": ["ehhez", "ahhoz", "ezekhez", "azokhoz"],
     "interr_prn": ["kihez", "mihez", "melyikhez", "milyenhez", "mennyihez?", "holhoz?", "honnanhoz?", "hovához?", "mikorhoz?", "miérthez?", "hogyanhoz?"],
     "reflex_prn": ["magamhoz", "magadhoz", "magához", "magunkhoz", "magatokhoz", "magukhoz"]
   },
@@ -67,7 +67,7 @@
     "meaning": "by, at (solid object)",
     "suffix": ["-nál", "-nél"],
     "person_prn": ["nálam", "nálad", "nál / Önnél", "nálunk", "nálatok", "náluk / Önöknél"],
-    "demons_prn": ["ennél / ezeknél", "annál / azoknál", "emennél / emebeknél", "amottnál / amazoknál", "azonnál / azonoknál"],
+    "demons_prn": ["ennél", "annál", "ezeknél", "azoknál"],
     "interr_prn": ["kinél", "minél", "melyiknél", "milyen(nél)?", "mennyi(nél)?", "holnál?", "honnannál?", "hovánál?", "mikor(nél)?", "miért(nél)?", "hogyan(nél)?"],
     "reflex_prn": ["magamnál", "magadnál", "magnál", "magunknál", "magatoknál", "maguknál"]
   },
@@ -76,7 +76,7 @@
     "meaning": "away from (solid object)",
     "suffix": ["-tól", "-től"],
     "person_prn": ["tőlem", "tőled", "tőle / Öntől", "tőlünk", "tőletek", "tőlük / Önöktől"],
-    "demons_prn": ["ettől / ezektől", "attól / azoktól", "emettől / emebektől", "amottól / amazoktól", "azontól / azonoktól"],
+    "demons_prn": ["ettől", "attól", "ezektől", "azoktól"],
     "interr_prn": ["kitől", "mitől", "melyiktől", "milyentől", "mennyi(től)?", "holtől?", "honnantól?", "hovától?", "mikor(től)?", "miért(től)?", "hogyan(től)?"],
     "reflex_prn": ["magamtól", "magadtól", "magától", "magunktól", "magatoktól", "maguktól"]
   },
@@ -84,8 +84,8 @@
     "type": "positional",
     "meaning": "onto (surface)",
     "suffix": ["-ra", "-re"],
-    "person_prn": ["ram / rám", "rad / rád", "rá / Önre", "ránk", "ratok / rátok", "rájuk / Önökre"],
-    "demons_prn": ["erre / ezekre", "arra / azokre", "emere / emebekre", "amottra / amazokra", "azonra / azonokra"],
+    "person_prn": ["rám", "rád", "rá / Önre", "ránk", "rátok", "rájuk / Önökre"],
+    "demons_prn": ["erre", "arra", "ezekre", "azokre"],
     "interr_prn": ["kire", "mire", "melyikre", "milyenre", "mennyi(re)?", "holra?", "honnanra?", "hovára?", "mikorra?", "miért(re)?", "hogyanra?"],
     "reflex_prn": ["magamra", "magadra", "magára", "magunkra", "magatokra", "magukra"]
   },
@@ -93,8 +93,8 @@
     "type": "positional",
     "meaning": "on (surface)",
     "suffix": ["-on", "-en", "-ön", "-n"],
-    "person_prn": ["ra / rám", "re / rád", "ra / Önre", "ra / ránk", "ra / rátok", "ra / rájuk / Önökre"],
-    "demons_prn": ["erre / ezekre", "arra / azokra", "emere / emebekre", "amottra / amazokra", "azonra / azonokra"],
+    "person_prn": ["rajtam", "rajtad", "rajta / Önön", "rajtunk", "rajtatok", "rajtuk / Önökön"],
+    "demons_prn": ["erre", "arra", "ezekre", "azokra"],
     "interr_prn": ["kire", "mire", "melyikre", "milyenre", "mennyi(re)?", "holra?", "honnanra?", "hovára?", "mikorra?", "miért(re)?", "hogyanra?"],
     "reflex_prn": ["magamra", "magadra", "magára", "magunkra", "magatokra", "magukra"]
   },
@@ -103,7 +103,7 @@
     "meaning": "off (surface); about, concerning (something/someone)",
     "suffix": ["-ról", "-ről"],
     "person_prn": ["rólam", "rólad", "róla / Önről", "rólunk", "rólatok", "róluk / Önökről"],
-    "demons_prn": ["erről / ezekről", "arról / azokról", "emerről / emebekről", "amottról / amazokról", "azonról / azonokról"],
+    "demons_prn": ["erről", "arról", "ezekről", "azokról"],
     "interr_prn": ["kiről", "miről", "melyikről", "milyenről", "mennyi(ről)?", "holról?", "honnanról?", "hováról?", "mikor(ről)?", "miért(ről)?", "hogyanról?"],
     "reflex_prn": ["magamról", "magadról", "magáról", "magunkról", "magatokról", "magukról"]
   },
@@ -121,7 +121,7 @@
     "meaning": "with",
     "suffix": ["-val", "-vel"],
     "person_prn": ["velem", "veled", "vele / Önnel", "velünk", "veletek", "velük / Önökkel"],
-    "demons_prn": ["evvel / ezekkel", "azzal / azokkal", "emével / emebekkel", "amottal / amazokkal", "azonnal / azonokkal"],
+    "demons_prn": ["ezzel / evvel", "azzal / avval", "ezekkel", "azokkal"],
     "interr_prn": ["kivel", "mivel", "melyikkel", "milyennel", "mennyi(vel)?", "holval?", "honnanval?", "hovával?", "mikorval?", "miért(vel)?", "hogyanval?"],
     "reflex_prn": ["magammal", "magaddal", "magával", "magunkkal", "magatokkal", "magukkal"]
   },
@@ -139,7 +139,7 @@
     "meaning": "for, for the purpose of",
     "suffix": ["-ért"],
     "person_prn": ["értem", "érted", "érte / Önért", "értünk", "értetek", "értük / Önökért"],
-    "demons_prn": ["eztért / ezekért", "azért / azokért", "ementért / emebekért", "amottért / amazokért", "azonért / azonokért"],
+    "demons_prn": ["ezért", "azért", "ezekért", "azokért"],
     "interr_prn": ["kiért", "miért", "melyikért", "milyenért", "mennyiért?", "holért?", "honnanért?", "hováért?", "mikorért?", "miértért?", "hogyanért?"],
     "reflex_prn": ["magamért", "magadért", "magaért", "magunkért", "magatokért", "magukért"]
   },

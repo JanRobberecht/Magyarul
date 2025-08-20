@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Uitleg: Expand functionaliteit + herkomst van "prev"</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { --bg:#0c0f14; --card:#121722; --ink:#e8eefc; --muted:#9fb0d1; --accent:#7aa2ff; }
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
+         margin:0;padding:32px;background:var(--bg);color:var(--ink);line-height:1.55}
+    h1,h2,h3{line-height:1.2;margin:0 0 12px}
+    h1{font-size:28px} h2{font-size:22px} h3{font-size:18px;color:var(--accent)}
+    .card{background:var(--card);border:1px solid #1b2231;border-radius:16px;padding:18px;margin:16px 0;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+    code,kbd,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    pre{background:#0a0f18;border:1px solid #1c2434;color:#cfe1ff;padding:14px;border-radius:12px;overflow:auto}
+    .pill{display:inline-block;background:#0b1424;border:1px solid #223150;border-radius:999px;padding:2px 10px;margin-right:8px;font-size:12px;color:var(--muted)}
+    ul{margin:8px 0 8px 20px}
+    .tip{border-left:4px solid #3b6dff;padding:10px 12px;background:#0c1426;color:#d9e6ff;border-radius:8px}
+    .diagram{font-size:13px;background:#0b111b;border:1px dashed #203050;border-radius:12px;padding:12px;overflow:auto;white-space:pre}
+    .ok{color:#8ef6c2} .warn{color:#ffd27a}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  </style>
+</head>
+<body>
+
+  <h1>Expand functionaliteit in jouw React-component + wat is <code>prev</code>?</h1>
+
+  <div class="card">
+    <div class="pill">Context</div>
+    <div class="pill">React</div>
+    <div class="pill">useState</div>
+    <p>
+      In jouw component beheer je een “open/dicht” (expanded) status per <em>case</em>. 
+      Hieronder leggen we stap voor stap uit hoe dat werkt, en waar <code>prev</code> precies vandaan komt.
+    </p>
+  </div>
+
+  <!-- 1. State -->
+  <div class="card">
+    <h2>1) State voor expanderen</h2>
+    <pre><code>const [expanded, setExpanded] = useState({});</code></pre>
+    <ul>
+      <li><code>expanded</code> is een object waarin je per <strong>case</strong> bewaart of deze open (<code>true</code>) of dicht (<code>false</code> / <code>undefined</code>) is.</li>
+      <li>Begintoestand: <code>{}</code> ⇒ alles is dicht.</li>
+    </ul>
+  </div>
+
+  <!-- 2. Toggle -->
+  <div class="card">
+    <h2>2) Toggelen van een case</h2>
+    <pre><code>const toggleCase = (caseName) =&gt; {
+  setExpanded((prev) =&gt; ({ ...prev, [caseName]: !prev[caseName] }));
+};</code></pre>
+    <ul>
+      <li><code>toggleCase</code> krijgt de naam van de case (bv. <code>"Nominative"</code>).</li>
+      <li>Met <code>setExpanded</code> maak je een kopie van de vorige state en verander je enkel die case:
+        <ul>
+          <li>Was <code>prev[caseName]</code> <code>true</code>? ⇒ wordt <code>false</code>.</li>
+          <li>Was het <code>false</code> of <code>undefined</code>? ⇒ wordt <code>true</code>.</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 3. Klikbare header -->
+  <div class="card">
+    <h2>3) Klikbare header</h2>
+    <pre><code>&lt;div className="case-header" onClick={() =&gt; toggleCase(caseName)} style={{ cursor: "pointer" }}&gt;
+  &lt;div className={`arrow ${expanded[caseName] ? "down" : "right"}`}&gt;▶&lt;/div&gt;
+  &lt;h3&gt;{caseName}&lt;/h3&gt;
+  &lt;div&gt;{caseData.suffix}&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    <ul>
+      <li>Klik ⇒ <code>toggleCase(caseName)</code> draait de status om.</li>
+      <li><code>expanded[caseName]</code> bepaalt het pijltje (rechts of omlaag).</li>
+    </ul>
+  </div>
+
+  <!-- 4. Voorwaardelijk renderen -->
+  <div class="card">
+    <h2>4) Inhoud tonen/verbergen</h2>
+    <pre><code>{expanded[caseName] &amp;&amp; (
+  &lt;div className="case-body"&gt;...&lt;/div&gt;
+)}</code></pre>
+    <ul>
+      <li>Short-circuit rendering: enkel renderen als de waarde <code>true</code> is.</li>
+      <li>Is de waarde <code>false</code> of <code>undefined</code>? ⇒ er wordt niets getoond.</li>
+    </ul>
+  </div>
+
+  <!-- 5. Waar komt prev vandaan -->
+  <div class="card">
+    <h2>5) Wat is <code>prev</code> en waar komt het vandaan?</h2>
+    <p>
+      <strong>Kernidee:</strong> Als je de state wil updaten op basis van de <em>vorige</em> waarde, geef je aan 
+      <code>setExpanded</code> geen nieuw object direct, maar een <em>update-functie</em>. 
+      React roept die functie aan met het meest recente state-object als argument. Dat argument noemen we vaak <code>prev</code>.
+    </p>
+    <pre><code>setExpanded((prev) =&gt; {
+  // prev is hier gegarandeerd de LAATSTE, correcte state op het moment van updaten
+  return { ...prev, [caseName]: !prev[caseName] };
+});</code></pre>
+
+    <h3>Waarom is dit belangrijk?</h3>
+    <ul>
+      <li><strong>Batching & concurrency:</strong> React kan meerdere state-updates bundelen en asynchroon uitvoeren. 
+        Als je dan zou schrijven <code>setExpanded({ ...expanded, ... })</code> (dus zonder functie), 
+        kun je met een <em>verouderde</em> kopie van <code>expanded</code> werken.</li>
+      <li><strong>Correctheid bij snelle interacties:</strong> Bij snel klikken of meerdere updates na elkaar is 
+        <code>prev</code> altijd up-to-date op het exacte moment van de update.</li>
+    </ul>
+
+    <div class="grid">
+      <div>
+        <h3 class="ok">✓ Correct (met functie)</h3>
+        <pre><code>setExpanded((prev) =&gt; ({ 
+  ...prev, 
+  [caseName]: !prev[caseName] 
+}));</code></pre>
+      </div>
+      <div>
+        <h3 class="warn">⚠ Kan fout gaan (zonder functie)</h3>
+        <pre><code>// Mogelijk "stale" expanded door batching/snelle clicks:
+setExpanded({ 
+  ...expanded, 
+  [caseName]: !expanded[caseName] 
+});</code></pre>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>Onthouden:</strong> <code>prev</code> is <em>niet</em> magisch en komt <em>niet</em> uit je scope—React
+      geeft het aan jouw update-functie door als het actuele vorige state-object. 
+      Gebruik dit patroon altijd wanneer je nieuwe state afhangt van de oude.
+    </div>
+  </div>
+
+  <!-- Mini-diagram -->
+  <div class="card">
+    <h2>6) Mini-diagram: klik → toggle → render</h2>
+    <div class="diagram">
+[Klik op header]
+       │
+       ▼
+toggleCase(caseName)
+       │  setExpanded((prev) =&gt; produce(prev))
+       ▼
+React roept jouw update-functie aan met prev (= laatste state)
+       │
+       ▼
+Nieuwe state berekenen: { ...prev, [caseName]: !prev[caseName] }
+       │
+       ▼
+React slaat state op en triggert render
+       │
+       ▼
+UI leest expanded[caseName] → body tonen of verbergen
+    </div>
+  </div>
+
+  <!-- Bonus: één open tegelijk (optioneel) -->
+  <div class="card">
+    <h2>Bonus (optioneel): Slechts één case tegelijk open</h2>
+    <p>Als je wil dat het openklappen van de ene case de andere sluit:</p>
+    <pre><code>const toggleCase = (caseName) =&gt; {
+  setExpanded((prev) =&gt; {
+    const isOpen = !!prev[caseName];
+    // Als het al open is, sluit alles
+    if (isOpen) return {};
+    // Anders: maak alleen deze open
+    return { [caseName]: true };
+  });
+};</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>Samenvatting</h2>
+    <ul>
+      <li><code>expanded</code> bewaart per case of die open is.</li>
+      <li>Klik op de header toggelt die vlag voor de betreffende case.</li>
+      <li>Render gebruikt <code>{expanded[caseName] &amp;&amp; ...}</code> om de body conditioneel te tonen.</li>
+      <li><code>prev</code> is de vorige state die React doorgeeft aan jouw update-functie—veilig bij batching en snelle interacties.</li>
+    </ul>
+  </div>
+
+</body>
+</html>

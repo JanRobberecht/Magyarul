@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Uitgebreide uitleg Sidebar Menu met React Router</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; line-height: 1.5; }
+  h2 { color: #2a5d84; }
+  code { background: #f0f0f0; padding: 2px 4px; border-radius: 3px; }
+  pre { background: #f9f9f9; padding: 10px; border-radius: 5px; overflow-x: auto; }
+  ul { margin-left: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Sidebar Menu met React Router – Uitgebreide uitleg</h1>
+
+<h2>1. Imports van React Router</h2>
+<pre>
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+  useLocation
+} from "react-router-dom";
+</pre>
+
+<p><strong>Uitleg per onderdeel:</strong></p>
+<ul>
+  <li><code>BrowserRouter (Router)</code>:
+    <ul>
+      <li>Het container-element dat routing in React mogelijk maakt.</li>
+      <li>Alles wat navigatie bevat, moet binnen deze component staan.</li>
+      <li>In de sidebar app zorgt Router ervoor dat de URL verandert bij klik op <code>NavLink</code>.</li>
+    </ul>
+  </li>
+  <li><code>Routes</code>:
+    <ul>
+      <li>Bevat alle mogelijke routes (<code>Route</code> elementen).</li>
+      <li>React Router kijkt naar de huidige URL en rendert het juiste component.</li>
+      <li>In combinatie met <code>NavLink</code> maakt het navigatie mogelijk.</li>
+    </ul>
+  </li>
+  <li><code>Route</code>:
+    <ul>
+      <li>Definieert één route: bijvoorbeeld <code>&lt;Route path="/home" element=&lt;Home /&gt; /&gt;</code>.</li>
+      <li>Elk submenu-item kan naar een <code>Route</code> verwijzen via <code>NavLink</code>.</li>
+    </ul>
+  </li>
+  <li><code>NavLink</code>:
+    <ul>
+      <li>Wordt gebruikt voor links die navigeren naar een route.</li>
+      <li>Kan automatisch detecteren of de route actief is (<code>isActive</code>) en een speciale klasse toevoegen (<code>active-link</code>).</li>
+      <li>In jouw sidebar wordt <code>NavLink</code> gebruikt voor submenu-items.</li>
+    </ul>
+  </li>
+  <li><code>useLocation</code>:
+    <ul>
+      <li>Hook die informatie geeft over de huidige URL.</li>
+      <li>Wordt gebruikt om bijvoorbeeld te checken welk menu-item actief is of extra logica uit te voeren wanneer de route verandert.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>2. Sidebar-menu structuur</h2>
+<pre>
+&lt;nav className={`sidebar ${open ? "open" : ""}`}&gt;
+  &lt;ul className="menu"&gt;
+    {menu.map((item) =&gt; (
+      &lt;li key={item.path}&gt;
+        &lt;div className="menu-label" 
+             onClick={() =&gt; item.children &amp;&amp; toggle(item.label)}&gt;
+          {item.children &amp;&amp; (
+            &lt;span className={`arrow ${expanded[item.label] ? "down" : "right"}`}&gt;▶&lt;/span&gt;
+          )}
+          {item.label}
+        &lt;/div&gt;
+
+        {item.children &amp;&amp; expanded[item.label] &amp;&amp; (
+          &lt;ul className="submenu"&gt;
+            {item.children.map((child) =&gt; (
+              &lt;li key={child.path}&gt;
+                &lt;NavLink
+                  to={child.path}
+                  onClick={() =&gt; isMobile &amp;&amp; setOpen(false)}
+                  className={({ isActive }) =&gt; (isActive ? "active-link" : "")}
+                &gt;
+                  {child.label}
+                &lt;/NavLink&gt;
+              &lt;/li&gt;
+            ))}
+          &lt;/ul&gt;
+        )}
+      &lt;/li&gt;
+    ))}
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+
+<h2>3. Uitleg van de elementen</h2>
+<ul>
+  <li><strong>&lt;nav&gt;</strong>: Container voor de sidebar, klasse <code>open</code> bepaalt of hij zichtbaar is.</li>
+  <li><strong>&lt;ul class="menu"&gt;</strong>: Lijst van hoofdmenu-items.</li>
+  <li><strong>&lt;li&gt;</strong>: Elk menu-item.</li>
+  <li><strong>&lt;div class="menu-label"&gt;</strong>:
+    <ul>
+      <li>Neutraal klikbaar element om submenu uit te klappen.</li>
+      <li>Waarom geen <code>NavLink</code>? Omdat hoofdmenu-items soms alleen een submenu openen, geen route navigeren.</li>
+    </ul>
+  </li>
+  <li><strong>&lt;span class="arrow"&gt;</strong>: Pijltje dat visueel laat zien of submenu open of dicht is.</li>
+  <li><strong>&lt;ul class="submenu"&gt;</strong>: Submenu-items, alleen zichtbaar als <code>expanded[item.label]</code> true is.</li>
+  <li><strong>&lt;NavLink&gt;</strong>:
+    <ul>
+      <li>Navigeert naar een route (<code>to={child.path}</code>).</li>
+      <li>Geeft automatisch <code>active-link</code> wanneer de route actief is.</li>
+      <li>Verbindt de import van React Router direct met de submenu-links.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>4. Uitleg van functies en state</h2>
+<ul>
+  <li><strong>toggle(label)</strong>:
+    <ul>
+      <li>Opent of sluit het submenu voor een menu-item.</li>
+      <li>Voorbeeld:
+<pre>
+function toggle(label) {
+  setExpanded(prev =&gt; ({
+    ...prev,
+    [label]: !prev[label]  // Wisselt de boolean van dit item
+  }));
+}
+</pre>
+      </li>
+      <li><code>prev</code> staat voor de vorige state van <code>expanded</code>, zodat andere submenu-items niet beïnvloed worden.</li>
+    </ul>
+  </li>
+  <li><strong>expanded[item.label]</strong>: boolean die aangeeft of een submenu open is.</li>
+  <li><strong>setOpen(false)</strong>: sluit sidebar op mobiel na klik op submenu-item.</li>
+  <li><strong>isActive in NavLink</strong>: markeert actieve link visueel.</li>
+  <li><strong>useLocation</strong>: geeft informatie over huidige URL, bijvoorbeeld voor logica van actief menu-item.</li>
+</ul>
+
+<h2>5. Connectie tussen React Router import en de sidebar</h2>
+<ul>
+  <li><strong>BrowserRouter / Router</strong>: alle <code>NavLink</code> elementen werken alleen binnen deze container. Zonder Router zou navigatie niet functioneren.</li>
+  <li><strong>Routes en Route</strong>: bepalen welke component getoond wordt bij een URL, bijvoorbeeld wanneer een submenu-link wordt aangeklikt.</li>
+  <li><strong>NavLink</strong>: maakt de connectie tussen submenu-items en de Route. Zorgt dat klik op link de URL verandert en juiste component rendert.</li>
+  <li><strong>useLocation</strong>: kan gebruikt worden om te checken welke Route actief is en zo bijvoorbeeld submenu automatisch open te zetten of actieve link te highlighten.</li>
+</ul>
+
+<h2>6. Samengevat</h2>
+<p>Elementen en functies:</p>
+<ul>
+  <li><code>div</code> voor hoofdmenu-items: opent submenu, geen navigatie</li>
+  <li><code>NavLink</code> voor submenu-items: navigeert + markeert actief</li>
+  <li><code>toggle(label)</code>, <code>expanded</code>, <code>prev</code>, <code>setOpen(false)</code>: beheren submenu state en mobiele sidebar</li>
+  <li>React Router import (Router, Routes, Route, NavLink, useLocation) verbindt menu met navigatie en actieve status van links</li>
+</ul>
+
+</body>
+</html>
