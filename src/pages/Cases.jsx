@@ -105,20 +105,6 @@ function Cases({ cases = casesObject }) {
 
   return (
     <>
-      {/*<div className="view-toggle">
-        <button
-          className={`view-btn ${view === "cases" ? "active" : ""}`}
-          onClick={() => setView("cases")}
-        >
-          Cases View
-        </button>
-        <button
-          className={`view-btn ${view === "pronouns" ? "active" : ""}`}
-          onClick={() => setView("pronouns")}
-        >
-          Pronouns View
-        </button>
-      </div> */}
 
       <div className="view-toggle">
         {view === "cases" ? (
