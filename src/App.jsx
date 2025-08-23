@@ -115,19 +115,19 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <Router>
+    <Router basename="/Magyarul"> {/*This is done because of github pages */}
       <div className="app-container">
         <Header onHamburgerClick={() => setMenuOpen(!menuOpen)} />
         <div className="content-container">
           <Sidebar open={menuOpen} setOpen={setMenuOpen} />
           <main className="main-content">
             <Routes>
-              <Route path="/grammar" element={<Grammar />} />
-              <Route path="/grammar/cases" element={<Cases />} />
-              <Route path="/grammar/verbs" element={<Verbs />} />
-              <Route path="/vocabulary" element={<Vocabulary />} />
-              <Route path="/vocabulary/words" element={<Words />} />
-              <Route path="/vocabulary/expressions" element={<Expressions />} />
+              <Route path="grammar" element={<Grammar />} />
+              <Route path="grammar/cases" element={<Cases />} />
+              <Route path="grammar/verbs" element={<Verbs />} />
+              <Route path="vocabulary" element={<Vocabulary />} />
+              <Route path="vocabulary/words" element={<Words />} />
+              <Route path="vocabulary/expressions" element={<Expressions />} />
               <Route path="*" element={<Home />} />
             </Routes>
           </main>

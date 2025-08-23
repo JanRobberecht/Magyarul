@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from "react";
-import Case from "./Case";
+import Case from "./Item.jsx";
 import casesObject from "../data/cases.json";
 import casesInfo from "../data/cases.js";
 
-// Pronoun categories
 const pronounCategories = [
   { label: "Pers Pron", key: "person_prn" },
   { label: "Dem Pron", key: "demons_prn" },
@@ -11,7 +10,13 @@ const pronounCategories = [
   { label: "Refl Pron", key: "reflex_prn" },
 ];
 
-// Helper to toggle state
+const pronounCategoriesFull = [
+  { label: "Personal Pronouns", key: "person_prn" },
+  { label: "Demonstrative Pronouns", key: "demons_prn" },
+  { label: "Intterogative Pronouns", key: "interr_prn" },
+  { label: "Reflexive Pronouns", key: "reflex_prn" },
+];
+
 const toggleState = (state, keys, value = null) => {
   const next = { ...state };
   keys.forEach((k) => {
@@ -23,8 +28,8 @@ const toggleState = (state, keys, value = null) => {
 function Cases({ cases = casesObject }) {
   const [pronouns, setPronouns] = useState({});
   const [info, setInfo] = useState({});
-  const [view, setView] = useState("cases"); // "cases" or "pronouns"
-  const [lastToggle, setLastToggle] = useState("all"); // "all", "pronouns", "info"
+  const [view, setView] = useState("cases");
+  const [lastToggle, setLastToggle] = useState("all");
 
   const allCases = useMemo(() => Object.keys(cases), [cases]);
 
@@ -41,7 +46,6 @@ function Cases({ cases = casesObject }) {
     [allCases]
   );
 
-  // ===== Mass actions =====
   const expandAll = () => {
     setLastToggle("all");
     if (view === "cases") {
@@ -60,7 +64,7 @@ function Cases({ cases = casesObject }) {
   };
 
   const toggleAllPronouns = () => {
-    setLastToggle("pronouns");
+    setLastToggle("subitem1");
     setPronouns(
       toggleState(
         pronouns,
@@ -71,7 +75,7 @@ function Cases({ cases = casesObject }) {
   };
 
   const toggleAllInfo = () => {
-    setLastToggle("info");
+    setLastToggle("subitem2");
     setInfo(
       toggleState(
         info,
@@ -81,7 +85,6 @@ function Cases({ cases = casesObject }) {
     );
   };
 
-  // ===== Status checks =====
   const anyPronounsOpen =
     view === "cases"
       ? casesWithPronouns.some((t) => !!pronouns[t])
@@ -100,52 +103,54 @@ function Cases({ cases = casesObject }) {
   const allInfoOpen =
     casesWithInfo.length > 0 && casesWithInfo.every((t) => !!info[t]);
 
-  // ===== Render =====
   return (
     <>
+
       <div className="view-toggle">
-        <button
-          className={`view-btn ${view === "cases" ? "active" : ""}`}
-          onClick={() => setView("cases")}
-        >
-          Cases View
-        </button>
-        <button
-          className={`view-btn ${view === "pronouns" ? "active" : ""}`}
-          onClick={() => setView("pronouns")}
-        >
-          Pronouns View
-        </button>
+        {view === "cases" ? (
+          <button
+            className="view-btn"
+            onClick={() => setView("pronouns")}
+          >
+            Switch to Pronouns View
+          </button>
+        ) : (
+          <button
+            className="view-btn"
+            onClick={() => setView("cases")}
+          >
+            Switch to Cases View
+          </button>
+        )}
       </div>
 
-      {view === "cases" && (
-        <div className="controls">
-          {!anyOpen && (
-            <button className="expand-all-btn" onClick={expandAll}>
-              Expand All
-            </button>
-          )}
-          {anyOpen && (
-            <button className="collapse-all-btn" onClick={collapseAll}>
-              Collapse All
-            </button>
-          )}
+      {/* Controls nu ook zichtbaar in pronouns view */}
+      <div className="controls">
+        {!anyOpen && (
+          <button className="expand-all-btn" onClick={expandAll}>
+            Expand All
+          </button>
+        )}
+        {anyOpen && (
+          <button className="collapse-all-btn" onClick={collapseAll}>
+            Collapse All
+          </button>
+        )}
 
-          {casesWithPronouns.length > 0 && (
-            <button className="toggle-pronouns-btn" onClick={toggleAllPronouns}>
-              {allPronounsOpen ? "Collapse Pronouns" : "Expand Pronouns"}
-            </button>
-          )}
+        {view === "cases" && casesWithPronouns.length > 0 && (
+          <button className="toggle-subitem1-btn" onClick={toggleAllPronouns}>
+            {allPronounsOpen ? "Collapse Pronouns" : "Expand Pronouns"}
+          </button>
+        )}
 
-          {casesWithInfo.length > 0 && (
-            <button className="toggle-info-btn" onClick={toggleAllInfo}>
-              {allInfoOpen ? "Collapse Info" : "Expand Info"}
-            </button>
-          )}
-        </div>
-      )}
+        {view === "cases" && casesWithInfo.length > 0 && (
+          <button className="toggle-subitem2-btn" onClick={toggleAllInfo}>
+            {allInfoOpen ? "Collapse Info" : "Expand Info"}
+          </button>
+        )}
+      </div>
 
-      <div className={`cases-list ${view}-view`}>
+      <div className={`item-list ${view}-view`}>
         {view === "cases" &&
           allCases.map((caseTitle) => (
             <Case
@@ -180,12 +185,12 @@ function Cases({ cases = casesObject }) {
                   }
                 }
               }}
-              lastToggle={lastToggle} // <-- meegeven aan Case
+              lastToggle={lastToggle}
             />
           ))}
 
         {view === "pronouns" &&
-          pronounCategories.map((cat) => (
+          pronounCategoriesFull.map((cat) => (
             <Case
               key={cat.key}
               caseTitle={cat.label}
@@ -202,7 +207,7 @@ function Cases({ cases = casesObject }) {
                 setPronouns((prev) => ({ ...prev, [t]: !prev[t] }))
               }
               isPronounView
-              lastToggle={lastToggle} // <-- meegeven aan Case
+              lastToggle={lastToggle}
             />
           ))}
       </div>
